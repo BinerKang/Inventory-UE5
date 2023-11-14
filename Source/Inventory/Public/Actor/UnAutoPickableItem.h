@@ -16,7 +16,7 @@ class INVENTORY_API AUnAutoPickableItem : public AItem
 
 public:
 
-	void InitialItem(const EPickableItemName InEItemID, UPickableItemDataAsset* ItemDataAsset);
+	void InitialItem(const EPickableItemName InEItemID, UPickableItemDataAsset* ItemDataAsset, const FVector& DropDirection);
 	
 protected:
 	virtual void OnBoxBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,

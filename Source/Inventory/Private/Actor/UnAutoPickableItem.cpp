@@ -7,14 +7,14 @@
 #include "Components/BoxComponent.h"
 
 
-void AUnAutoPickableItem::InitialItem(const EPickableItemName InEItemID, UPickableItemDataAsset* ItemDataAsset)
+void AUnAutoPickableItem::InitialItem(const EPickableItemName InEItemID, UPickableItemDataAsset* ItemDataAsset, const FVector& DropDirection)
 {
 	EItemID = InEItemID;
 	PickableItemDataAsset = ItemDataAsset;
 	Mesh->SetStaticMesh(GetItemInfo().Mesh);
 	Mesh->SetEnableGravity(true);
 	Mesh->SetSimulatePhysics(true);
-	Mesh->AddImpulse(GetActorForwardVector() * 200.f, NAME_None, true);
+	Mesh->AddImpulse(DropDirection * 200.f, NAME_None, true);
 	BoxCollision->SetBoxExtent(FVector(60.f, 60.f, 32.f));
 
 	GetWorld()->GetTimerManager().SetTimer(DisableTimer, this, &ThisClass::DisablePhysicalSimulation, SimulationSeconds, false);

@@ -109,7 +109,7 @@ void AMainPlayerState::DropItem(EPickableItemName EItemID, UPickableItemDataAsse
 	FTransform SpawnTransform;
 	SpawnTransform.SetLocation(GetPawn()->GetActorLocation() + GetPawn()->GetActorForwardVector() * 100.f);
 	AUnAutoPickableItem* Item = GetWorld()->SpawnActorDeferred<AUnAutoPickableItem>(AUnAutoPickableItem::StaticClass(), SpawnTransform, nullptr, nullptr, ESpawnActorCollisionHandlingMethod::AlwaysSpawn);
-	Item->InitialItem(EItemID, ItemDataAsset);
+	Item->InitialItem(EItemID, ItemDataAsset, GetPawn()->GetActorForwardVector());
 	Item->FinishSpawning(SpawnTransform);
 	
 	ConsumeItem(EItemID, UsedItemInfo);
