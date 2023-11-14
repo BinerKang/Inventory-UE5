@@ -59,11 +59,19 @@ void AInvPlayerController::ToggleInventoryWidget()
 	{
 		if (bInventoryOpen)
 		{
+			if (AHeroCharacter* HeroCharacter = Cast<AHeroCharacter>(GetPawn()))
+			{
+				HeroCharacter->CloseLight();
+			}
 			HUD->GetInventoryWidget()->RemoveFromParent();
 			SetNormalInputMode();
 		}
 		else
 		{
+			if (AHeroCharacter* HeroCharacter = Cast<AHeroCharacter>(GetPawn()))
+			{
+				HeroCharacter->OpenLight();
+			}
 			HUD->GetInventoryWidget()->AddToViewport(10);
 			SetInventoryInputMode(HUD->GetInventoryWidget());
 		}

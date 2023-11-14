@@ -6,6 +6,9 @@
 #include "Blueprint/UserWidget.h"
 #include "ItemSlotUserWidget.generated.h"
 
+struct FOwnedItemInfo;
+struct FPickableItemInfo;
+class UImage;
 enum class EPickableItemName : uint8;
 class UTextBlock;
 class UButton;
@@ -20,16 +23,23 @@ class INVENTORY_API UItemSlotUserWidget : public UUserWidget
 	GENERATED_BODY()
 
 public:
-	void SetItemInfo(UTexture2D* Icon, int32 Quantity, EPickableItemName InItemId);
+	void SetItemInfo(const FPickableItemInfo& ItemInfo, const FOwnedItemInfo& OwnedItemInfo);
 	
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 	TObjectPtr<UButton> ItemButton;
 
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 	TObjectPtr<UTextBlock> QuantityText;
+	
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+	TObjectPtr<UImage> HoverBorderImage;
 
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+	TObjectPtr<UImage> EquippedBgImage;
+	
 	FOnItemButtonEventSinature OnItemButtonHoveredDelegate;
 	FOnItemButtonEventSinature OnItemButtonUnHoveredDelegate;
+	FOnItemButtonEventSinature OnItemButtonPressedDelegate;
 private:
 	
 	EPickableItemName EItemID;
@@ -39,4 +49,7 @@ private:
 
 	UFUNCTION()
 	void OnItemButtonUnHovered();
+
+	UFUNCTION()
+	void OnItemButtonPressed();
 };

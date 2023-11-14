@@ -37,4 +37,10 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Custom")
 	TObjectPtr<UPickableItemDataAsset> PickableItemDataAsset;
+
+	UFUNCTION(Server, Reliable)
+	void ServerUseItem(EPickableItemName EItemID);
+
+	UFUNCTION(Server, Reliable)
+	void ServerDropItem(EPickableItemName EItemID);
 };

@@ -13,3 +13,8 @@ FItemCategoryInfo UPickableItemDataAsset::GetCategoryInfoByECategory(EPickableIt
 {
 	return CategoryInfos.FindChecked(Category);
 }
+
+FItemCategoryInfo UPickableItemDataAsset::GetCategoryInfoByEItemID(EPickableItemName EItemID) const
+{
+	return CategoryInfos.FindChecked(GetItemInfoByName(EItemID).Category);
+}

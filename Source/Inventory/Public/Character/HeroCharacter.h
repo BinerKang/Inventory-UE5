@@ -8,6 +8,7 @@
 #include "Inventory/Inventory.h"
 #include "HeroCharacter.generated.h"
 
+class URectLightComponent;
 class UCameraComponent;
 class USpringArmComponent;
 /**
@@ -30,6 +31,9 @@ public:
 	FORCEINLINE virtual AItem* GetOverlappingItem() override { return OverlappingItem; }
 	virtual void AddToInventory() override;
 	/* End PickupInterface  */
+
+	void OpenLight();
+	void CloseLight();
 	
 protected:
 	virtual void BeginPlay() override;
@@ -39,7 +43,17 @@ protected:
 
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<UCameraComponent> FollowCamera;
+	
+	UPROPERTY(VisibleAnywhere)
+	TObjectPtr<USceneCaptureComponent2D> SceneCapture;
 
+	/* Light For RenderCapture  */
+	UPROPERTY(VisibleAnywhere)
+	TObjectPtr<URectLightComponent> MainLight;
+
+	UPROPERTY(VisibleAnywhere)
+	TObjectPtr<URectLightComponent> FillLight;
+	
 private:
 
 	void InitHUD()  const;

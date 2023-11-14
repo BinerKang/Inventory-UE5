@@ -33,6 +33,7 @@ struct FPickableItemInfo
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	TObjectPtr<UStaticMesh> Mesh;
+	
 };
 
 USTRUCT()
@@ -45,6 +46,12 @@ struct FItemCategoryInfo
 
 	UPROPERTY(EditDefaultsOnly)
 	FText Category = FText();
+
+	UPROPERTY(EditDefaultsOnly)
+	FText UseActionName = FText();
+
+	UPROPERTY(EditDefaultsOnly)
+	FText DropActionName = FText();
 };
 
 /**
@@ -67,4 +74,6 @@ public:
 	FPickableItemInfo GetItemInfoByName(EPickableItemName Name) const;
 	
 	FItemCategoryInfo GetCategoryInfoByECategory(EPickableItemCategory Category) const;
+
+	FItemCategoryInfo GetCategoryInfoByEItemID(EPickableItemName EItemID) const;
 };

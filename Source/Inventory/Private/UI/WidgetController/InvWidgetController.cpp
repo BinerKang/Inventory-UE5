@@ -56,3 +56,20 @@ void UInvWidgetController::BroadcastDefaultValues()
 		}
 	}
 }
+
+void UInvWidgetController::ServerUseItem_Implementation(EPickableItemName EItemID)
+{
+	if (AMainPlayerState* PS = Cast<AMainPlayerState>(PlayerState))
+	{
+		const FPickableItemInfo& ItemInfo = PickableItemDataAsset->GetItemInfoByName(EItemID);
+		PS->UseItem(EItemID, ItemInfo);
+	}
+}
+
+void UInvWidgetController::ServerDropItem_Implementation(EPickableItemName EItemID)
+{
+	if (AMainPlayerState* PS = Cast<AMainPlayerState>(PlayerState))
+	{
+		PS->DropItem(EItemID, PickableItemDataAsset);
+	}
+}

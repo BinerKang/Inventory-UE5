@@ -7,8 +7,6 @@
 #include "CharacterBase.generated.h"
 
 
-class UInputComponent;
-
 UCLASS()
 class INVENTORY_API ACharacterBase : public ACharacter
 {
@@ -17,10 +15,15 @@ class INVENTORY_API ACharacterBase : public ACharacter
 public:
 	ACharacterBase();
 
+	void EquipWeapon(UStaticMesh* NewWeapon);
+	void EquipShield(UStaticMesh* NewShield);
+	
 protected:
 	virtual void BeginPlay() override;
 
 	UPROPERTY(VisibleAnywhere)
-	TObjectPtr<USkeletalMeshComponent> Weapon;
-	
+	TObjectPtr<UStaticMeshComponent> Weapon;
+
+	UPROPERTY(VisibleAnywhere)
+	TObjectPtr<UStaticMeshComponent> Shield;
 };

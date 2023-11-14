@@ -12,6 +12,8 @@
 #include "Net/UnrealNetwork.h"
 #include "UI/Widget/OverlayUserWidget.h"
 #include "Actor/Item.h"
+#include "Components/RectLightComponent.h"
+#include "Components/SceneCaptureComponent2D.h"
 
 AHeroCharacter::AHeroCharacter()
 {
@@ -38,6 +40,17 @@ AHeroCharacter::AHeroCharacter()
 	bUseControllerRotationPitch = false;
 	bUseControllerRotationRoll = false;
 	bUseControllerRotationYaw = false;
+
+	SceneCapture = CreateDefaultSubobject<USceneCaptureComponent2D>("SceneCapture");
+	SceneCapture->SetupAttachment(GetRootComponent());
+	SceneCapture->SetAutoActivate(false);
+	SceneCapture->SetVisibility(false);
+	
+	MainLight = CreateDefaultSubobject<URectLightComponent>("MainLightComp");
+	MainLight->SetupAttachment(GetMesh());
+	FillLight = CreateDefaultSubobject<URectLightComponent>("FillLightComp");
+	FillLight->SetupAttachment(GetMesh());
+	CloseLight();
 }
 
 void AHeroCharacter::PossessedBy(AController* NewController)
@@ -76,10 +89,25 @@ void AHeroCharacter::AddToInventory()
 
 }
 
+void AHeroCharacter::OpenLight()
+{
+	MainLight->SetVisibility(true);
+	FillLight->SetVisibility(true);
+	SceneCapture->SetVisibility(true);
+}
+
+void AHeroCharacter::CloseLight()
+{
+	MainLight->SetVisibility(false);
+	FillLight->SetVisibility(false);
+	SceneCapture->SetVisibility(false);
+}
+
 void AHeroCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
+	SceneCapture->ShowOnlyActorComponents(this);
 	
 }
 

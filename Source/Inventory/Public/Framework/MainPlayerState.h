@@ -24,6 +24,9 @@ struct FOwnedItemInfo
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	int32 Quantity = 1;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	bool bIsEquipped = false;
 };
 
 USTRUCT(BlueprintType)
@@ -75,6 +78,14 @@ public:
 
 	FORCEINLINE TArray<FOwnedItemCategory>& GetAllItems() { return AllItems; }
 	void AddToOwnedItems(const FPickableItemInfo& Info, const EPickableItemName EItemID);
+
+	/* Eat or Drop Item*/
+	void ConsumeItem(EPickableItemName EItemID, const FPickableItemInfo& UsedItemInfo);
+
+	void UpdateEquipState(EPickableItemName EItemID, const FPickableItemInfo& UsedItemInfo);
+	
+	void UseItem(EPickableItemName EItemID, const FPickableItemInfo& UsedItemInfo);
+	void DropItem(EPickableItemName EItemID, UPickableItemDataAsset* ItemDataAsset);
 	
 protected:
 

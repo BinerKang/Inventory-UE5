@@ -11,6 +11,8 @@
 
 void UInventoryUserWidget::SetInvWidgetController(UInvWidgetController* InWidgetController)
 {
+	SetIsFocusable(true);
+	
 	InvWidgetController = InWidgetController;
 
 	InvWidgetController->OnMoneyChangedDelegate.AddLambda(
