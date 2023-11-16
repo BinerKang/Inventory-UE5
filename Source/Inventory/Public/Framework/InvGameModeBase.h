@@ -6,6 +6,7 @@
 #include "GameFramework/GameModeBase.h"
 #include "InvGameModeBase.generated.h"
 
+class AModelPositionActor;
 /**
  * 
  */
@@ -16,7 +17,10 @@ class INVENTORY_API AInvGameModeBase : public AGameModeBase
 	
 public:
 
+	FORCEINLINE TArray<AActor*> GetModelPositionActors() const { return ModelPositionActors; };
 
 protected:
 	virtual void BeginPlay() override;
+	
+	TArray<AActor*> ModelPositionActors;
 };

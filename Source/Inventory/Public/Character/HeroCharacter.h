@@ -32,8 +32,8 @@ public:
 	virtual void AddToInventory() override;
 	/* End PickupInterface  */
 
-	void OpenLight();
-	void CloseLight();
+	void EnterModelState();
+	void LeaveModelState();
 	
 protected:
 	virtual void BeginPlay() override;
@@ -43,16 +43,9 @@ protected:
 
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<UCameraComponent> FollowCamera;
-	
-	UPROPERTY(VisibleAnywhere)
-	TObjectPtr<USceneCaptureComponent2D> SceneCapture;
-
-	/* Light For RenderCapture  */
-	UPROPERTY(VisibleAnywhere)
-	TObjectPtr<URectLightComponent> MainLight;
 
 	UPROPERTY(VisibleAnywhere)
-	TObjectPtr<URectLightComponent> FillLight;
+	TObjectPtr<UCameraComponent> ModelCamera;
 	
 private:
 
@@ -66,4 +59,7 @@ private:
 
 	void ChangePickupWidgetVisibility() const;
 	void SetPickupWidgetVisibility(bool bIsShow, EPickableItemName EItemID = EPickableItemName::EPIN_Empty) const;
+
+	FVector LastPosition;
+	FRotator LastRotation;
 };

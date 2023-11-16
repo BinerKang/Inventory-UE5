@@ -38,5 +38,6 @@ void ACharacterBase::EquipShield(UStaticMesh* NewShield)
 void ACharacterBase::BeginPlay()
 {
 	Super::BeginPlay();
+
 	
 }

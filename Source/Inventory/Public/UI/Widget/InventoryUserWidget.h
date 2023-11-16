@@ -35,4 +35,22 @@ public:
 
 protected:
 	virtual FReply NativeOnKeyDown(const FGeometry& InGeometry, const FKeyEvent& InKeyEvent) override;
+
+private:
+	UPROPERTY()
+	TObjectPtr<AActor> OrbsAttachActor;
+
+	UPROPERTY()
+	TArray<AActor*> SkillOrbs;
+
+	UPROPERTY(EditDefaultsOnly, Category="Custom")
+	TSubclassOf<AActor> OrbActorClass;
+	
+	UPROPERTY(EditDefaultsOnly, Category="Custom")
+	float OrbOffsetDistance = 100.f;
+
+	float Spread;
+	
+	void SpawnSkillOrbs(const int32 Num);
+	void TurnSkillOrbs() const;
 };

@@ -12,8 +12,8 @@
 #include "Net/UnrealNetwork.h"
 #include "UI/Widget/OverlayUserWidget.h"
 #include "Actor/Item.h"
-#include "Components/RectLightComponent.h"
-#include "Components/SceneCaptureComponent2D.h"
+#include "Framework/InvGameModeBase.h"
+#include "Kismet/GameplayStatics.h"
 
 AHeroCharacter::AHeroCharacter()
 {
@@ -41,16 +41,9 @@ AHeroCharacter::AHeroCharacter()
 	bUseControllerRotationRoll = false;
 	bUseControllerRotationYaw = false;
 
-	SceneCapture = CreateDefaultSubobject<USceneCaptureComponent2D>("SceneCapture");
-	SceneCapture->SetupAttachment(GetRootComponent());
-	SceneCapture->SetAutoActivate(false);
-	SceneCapture->SetVisibility(false);
-	
-	MainLight = CreateDefaultSubobject<URectLightComponent>("MainLightComp");
-	MainLight->SetupAttachment(GetMesh());
-	FillLight = CreateDefaultSubobject<URectLightComponent>("FillLightComp");
-	FillLight->SetupAttachment(GetMesh());
-	CloseLight();
+	ModelCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("ModelCamera"));
+	ModelCamera->SetupAttachment(GetRootComponent());
+	ModelCamera->SetActive(false);
 }
 
 void AHeroCharacter::PossessedBy(AController* NewController)
@@ -89,25 +82,9 @@ void AHeroCharacter::AddToInventory()
 
 }
 
-void AHeroCharacter::OpenLight()
-{
-	MainLight->SetVisibility(true);
-	FillLight->SetVisibility(true);
-	SceneCapture->SetVisibility(true);
-}
-
-void AHeroCharacter::CloseLight()
-{
-	MainLight->SetVisibility(false);
-	FillLight->SetVisibility(false);
-	SceneCapture->SetVisibility(false);
-}
-
 void AHeroCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-
-	SceneCapture->ShowOnlyActorComponents(this);
 	
 }
 
@@ -154,4 +131,27 @@ void AHeroCharacter::SetPickupWidgetVisibility(bool bIsShow, EPickableItemName E
 			HUD->GetOverlayWidget()->SetPickupHintVisibility(bIsShow, EItemID);
 		}
 	}
+}
+
+void AHeroCharacter::EnterModelState()
+{
+	if (const AInvGameModeBase* GM = Cast<AInvGameModeBase>(UGameplayStatics::GetGameMode(this)))
+	{
+		LastPosition = GetActorLocation();
+		LastRotation = GetActorRotation();
+		TeleportTo(GM->GetModelPositionActors()[0]->GetActorLocation(), GM->GetModelPositionActors()[0]->GetActorRotation());
+		FollowCamera->SetActive(false, true);
+		ModelCamera->SetActive(true, true);
+		CameraBoom->SetActive(false);
+		
+	}
+}
+
+void AHeroCharacter::LeaveModelState()
+{
+	TeleportTo(LastPosition, LastRotation);
+	ModelCamera->SetActive(false, true);
+ 	FollowCamera->SetActive(true, true);
+	CameraBoom->SetActive(true);
+
 }

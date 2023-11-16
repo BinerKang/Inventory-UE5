@@ -17,7 +17,7 @@ public:
 
 	void EquipWeapon(UStaticMesh* NewWeapon);
 	void EquipShield(UStaticMesh* NewShield);
-	
+
 protected:
 	virtual void BeginPlay() override;
 
